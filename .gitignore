@@ -1,4 +1,4 @@
-#########################
+
 # Unreal Generated Files#
 #########################
 */Build/
@@ -8,7 +8,7 @@
 */Saved/
 TheBeginning/Content/StarterContent/
 
-######################
+
 # VS Generated Files #
 ######################
 *.VC.db
