@@ -12,3 +12,4 @@ TheBeginning/Content/StarterContent/
 # VS Generated Files #
 ######################
 *.VC.db
+*.suo
