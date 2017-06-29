@@ -34,11 +34,13 @@ private:
 	float TimeCloseDoor = 1.f;
 
 	UPROPERTY(EditAnywhere)
-	ATriggerVolume* PressurePlate;
+	float MassToOpenDoor = 80.f;
 
 	UPROPERTY(EditAnywhere)
-	AActor* ActorThatOpens;
-
+	ATriggerVolume* PressurePlate;
+	
 	float LastDoorOpenTime = 0.0f;
+
+	float GetAllOverlappingMass();
 	
 };
