@@ -24,8 +24,7 @@ public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	APawn* Owner;
-	APlayerController* PlayerController;
-	bool CastDone = false;
+	APlayerController* PlayerController = nullptr;
 
 	UPROPERTY(EditAnywhere)
 	float Reach = 200.f;
@@ -33,4 +32,11 @@ public:
 	UPhysicsHandleComponent* PhysicsHandle = nullptr;
 	UInputComponent* Input = nullptr;
 
+	void Grab();
+	void Release();
+
+	void SetPhysicsHandle();
+	void SetInput();
+
+	FHitResult GetFirstPhysicsBodyInReach();
 };
