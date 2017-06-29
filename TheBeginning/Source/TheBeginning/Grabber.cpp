@@ -28,6 +28,26 @@ void UGrabber::BeginPlay()
 		if (PlayerController)
 			CastDone = true;
 	}
+
+	PhysicsHandle = GetOwner()->FindComponentByClass<UPhysicsHandleComponent>();
+	if (PhysicsHandle)
+	{
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s missing Component PhysicsHandle."), *GetOwner()->GetName());
+	}
+
+	Input = GetOwner()->FindComponentByClass<UInputComponent>();
+	if (Input)
+	{
+
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s missing Component Input."), *GetOwner()->GetName());
+	}
 }
 
 
@@ -56,6 +76,21 @@ void UGrabber::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompone
 			0.f,
 			10.f
 		);
+		
+		//UE_LOG(LogTemp, Warning, TEXT("begin hit"));
+
+		FHitResult Hit;
+		if (GetWorld()->LineTraceSingleByObjectType(
+			Hit,
+			ViewPointLocation,
+			LineTraceEnd,
+			FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+			FCollisionQueryParams(FName(TEXT("")), false, GetOwner())
+		))
+		{
+			UE_LOG(LogTemp, Warning, TEXT("is Hitting %s"), *(Hit.GetActor()->GetName()));
+		}
+
 
 
 	}
