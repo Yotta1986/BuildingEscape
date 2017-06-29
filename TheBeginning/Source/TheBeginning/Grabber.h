@@ -37,6 +37,10 @@ public:
 
 	void SetPhysicsHandle();
 	void SetInput();
+	void SetPlayerController();
 
 	FHitResult GetFirstPhysicsBodyInReach();
+
+	FVector GetReachLineStart();
+	FVector GetReachLineEnd();
 };
