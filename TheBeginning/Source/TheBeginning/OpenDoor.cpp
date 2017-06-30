@@ -16,11 +16,11 @@ UOpenDoor::UOpenDoor()
 
 void UOpenDoor::OpenDoor()
 {
-	GetOwner()->SetActorRotation(FRotator(0.f, OpenAngle, 0.f));
+	OnOpenRequest.Broadcast();
 }
 void UOpenDoor::CloseDoor()
 {
-	GetOwner()->SetActorRotation(FRotator(0.f, 0.f, 0.f));
+	OnCloseRequest.Broadcast();
 }
 
 // Called when the game starts
@@ -28,6 +28,10 @@ void UOpenDoor::BeginPlay()
 {
 	Super::BeginPlay();
 
+	if (!PressurePlate)
+	{
+		UE_LOG(LogTemp, Error, TEXT("%s missing PressurePlate"), *GetOwner()->GetName());
+	}
 }
 
 
@@ -39,10 +43,8 @@ void UOpenDoor::TickComponent(float DeltaTime, ELevelTick TickType, FActorCompon
 	if (GetAllOverlappingMass() > MassToOpenDoor)
 	{
 		OpenDoor();
-		LastDoorOpenTime = GetWorld()->GetTimeSeconds();
 	}
-	
-	if (GetWorld()->GetTimeSeconds() - LastDoorOpenTime > TimeCloseDoor)
+	else
 	{
 		CloseDoor();
 	}

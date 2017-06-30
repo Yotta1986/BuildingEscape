@@ -11,7 +11,6 @@ UGrabber::UGrabber()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// ...
 }
 
 void UGrabber::SetPhysicsHandle()
@@ -47,7 +46,6 @@ void UGrabber::SetPlayerController()
 	if (!Owner || !PlayerController)
 	{
 		UE_LOG(LogTemp, Error, TEXT("PlayerController missing."));
-
 	}
 
 }
@@ -68,7 +66,6 @@ void UGrabber::Grab()
 			Hit.GetActor()->GetActorRotation()
 		);
 		UE_LOG(LogTemp, Warning, TEXT("ComponentToGrab name is %s."), *ComponentToGrab->GetName());
-
 	}
 }
 
@@ -93,18 +90,15 @@ void UGrabber::BeginPlay()
 FHitResult UGrabber::GetFirstPhysicsBodyInReach()
 {
 	FHitResult Hit;
-	if (PlayerController)
+	if (GetWorld()->LineTraceSingleByObjectType(
+		Hit,
+		GetReachLineStart(),
+		GetReachLineEnd(),
+		FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
+		FCollisionQueryParams(FName(TEXT("")), false, GetOwner())
+	))
 	{
-		if (GetWorld()->LineTraceSingleByObjectType(
-			Hit,
-			GetReachLineStart(),
-			GetReachLineEnd(),
-			FCollisionObjectQueryParams(ECollisionChannel::ECC_PhysicsBody),
-			FCollisionQueryParams(FName(TEXT("")), false, GetOwner())
-		))
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Is Hitting %s"), *(Hit.GetActor()->GetName()));
-		}
+		UE_LOG(LogTemp, Warning, TEXT("Is Hitting %s"), *(Hit.GetActor()->GetName()));
 	}
 	return Hit;
 }
